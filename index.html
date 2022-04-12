@@ -1,0 +1,1233 @@
+<!-- 
+PREGUNTAS
+
+CATEGORIAS: Como cambiar el color de un texto con el hover
+
+ -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+ <title>Bulma-Budget</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'>
+ <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' />
+ <style>
+  #grey {
+   background-color: grey;
+  }
+
+  #focus {
+   outline: 2px solid red;
+  }
+
+  .delete-link,
+  .edit-link {
+   text-decoration: none !important;
+  }
+ </style>
+</head>
+
+<body id="grey">
+ <!-- //////////////////////////////////////// -->
+ <!-- NAVBAR START -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///////////////////////////// -->
+ <nav class="navbar is-primary is-spaced">
+  <div class="navbar-brand">
+   <a class="navbar-item " href="https://bulma.io">
+    <h1 class="title is-size-2-desktop has-text-white is-size-3"><i class="fas fa-money-bill pr-5"></i>Budget</h1>
+   </a>
+   </h2>
+
+   <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+   </a>
+  </div>
+
+  <div class="navbar-menu">
+   <div class="navbar-end">
+    <div class="navbar-item">
+     <div class="buttons">
+      <a class="button is-primary mr-0" data-navbar-target="#main-section-balance" id="navbar-btn-balance">
+       <i class="fas fa-chart-line p-2"></i>Balance
+      </a>
+      <a class="button is-primary mr-0 ml-0" data-navbar-target="#main-section-categories" id="navbar-btn-categories">
+       <i class="fas fa-tag p-2"></i>Categories
+      </a>
+      <a class="button is-primary  mr-0 ml-0" data-navbar-target="#main-section-reports" id="navbar-btn-reports">
+       <i class="fas fa-chart-bar p-2"></i> Reportes
+      </a>
+     </div>
+    </div>
+   </div>
+  </div>
+ </nav>
+ <!-- ///////////////////////////// -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///// NAVBAR END -->
+ <!-- //////////////////////////////////////// -->
+
+ <!-- ---------------------------------------- -->
+ <!-- ---------------------------------------- -->
+
+ <!-- //////////////////////////////////////// -->
+ <!-- BALANCE MAIN PAGE START -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///////////////////////////// -->
+ <div class="section" id="main-section-balance">
+  <div class="container hero is-fullheight">
+   <!-- BALANCE, FILTER AND TRANSACTIONS COLUMNS -->
+   <div class="columns is-multiline">
+    <!-- BALANCE AND FILTER COLUMN -->
+    <div class="column is-3-widescreen is-offset-1-widescreen is-12-tablet">
+     <!-- ///////////////////////////// -->
+     <!-- BALANCE BOX START -->
+     <!-- ///////////////////////////// -->
+     <div class="columns is-multiline ">
+      <!-- START BALANCE BOX -->
+      <div class="column ">
+       <div class="notification is-light p-4">
+        <!--BALANCE TITLE -->
+        <p class="is-size-3 mb-6"><strong>Balance</strong></p>
+
+        <!-- BALANCE ITEMS -->
+        <!-- 1st row -->
+        <div class="columns is-mobile is-vcentered">
+         <!-- item left -->
+         <div class="column is-size-5">Profits</div>
+         <!-- item right -->
+         <div class="column has-text-right has-text-success">+$<span id="main-balance-profits">0</span></div>
+        </div>
+        <!-- end 1st row -->
+
+        <!-- 2nd row -->
+        <div class="columns is-mobile is-vcentered">
+         <!-- item left -->
+         <div class="column is-size-5">Bills</div>
+         <!-- item right -->
+         <div class="column has-text-danger has-text-right">-$<span id="main-balance-bills">0</span></div>
+        </div>
+        <!-- end 2nd row -->
+
+        <!-- 3rd row -->
+        <div class="columns is-mobile is-vcentered">
+         <div class="column is-size-4">Total</div>
+         <div class="column has-text-weight-bold has-text-right">$<span id="main-balance-total">0</span></div>
+        </div>
+        <!-- end 3rd row -->
+
+       </div>
+      </div>
+     </div>
+     <!-- ///////////////////////////// -->
+     <!-- BALANCE BOX END -->
+     <!-- ///////////////////////////// -->
+
+     <!-- ---------------------------------------- -->
+
+     <!-- ///////////////////////////// -->
+     <!-- FILTROS BOX START -->
+     <!-- ///////////////////////////// -->
+     <div class="notification p-4">
+      <!-- FILTER TITLE AND HIDE OPTION -->
+      <div class="columns is-mobile is-vcentered">
+       <div class="column">
+        <p class="is-size-4 has-text-weight-bold">Filters</p>
+       </div>
+       <div class="column has-text-right has-text-info">
+        <div class="is-size-6 p-0"><a href="#" class=" delete-link" id="hide-show-filter-link">Hide Filters</a></div>
+       </div>
+      </div>
+      <!-- ///// FILTER TITLE AND HIDE OPTION END -->
+
+      <!-- FILTER TYPES -->
+      <div class="form" id="balance-filters-box">
+       <!-- FILTER BY TYPE -->
+       <div class="field">
+        <label for="tipo" class="label">Type</label>
+        <div class="control">
+         <div class="select is-fullwidth">
+          <select id="filter-by-type">
+           <option value="all">All</option>
+           <option value="income">Income</option>
+           <option value="expense">Expense</option>
+          </select>
+         </div>
+        </div>
+       </div>
+       <!-- ///// FILTER BY TYPE END -->
+
+       <!-- FILTER BY CATEGORY -->
+       <div class="field">
+        <label for="category" class="label">Category</label>
+        <div class="control">
+         <div class="select is-fullwidth">
+          <select id="select-filter-by-category">
+          </select>
+         </div>
+        </div>
+       </div>
+       <!-- ///// FILTER BY CATEGORY END -->
+
+       <!-- FILTER BY DATE -->
+       <div class="field">
+        <label for="date" class="label">Since</label>
+        <div class="control">
+         <input type="date" class="input" id="filter-by-date">
+        </div>
+       </div>
+
+       <!-- FILTER BY -->
+       <div class="field">
+        <label for="filterby" class="label">Filter by</label>
+        <div class="control">
+         <div class="select is-fullwidth">
+          <select name="" id="">
+           <option value="">Mas reciente</option>
+           <option value=""></option>
+           <option value=""></option>
+           <option value=""></option>
+           <option value=""></option>
+          </select>
+         </div>
+        </div>
+       </div>
+       <!-- ///// FILTER BY END -->
+      </div>
+      <!-- ///// FILTER TYPES END -->
+     </div>
+    </div>
+    <!-- ///////////////////////////// -->
+    <!-- FILTROS BOX END -->
+    <!-- ///////////////////////////// -->
+
+    <!-- ---------------------------------------- -->
+
+    <!-- ///////////////////////////// -->
+    <!-- ТRANSACTIONS BOX START -->
+    <!-- ///////////////////////////// -->
+    <div class="column is-7-widescreen is-12-tablet">
+     <div class="notification p-4">
+      <!-- BALANCE TITLE AND BUTTON -->
+      <div class="columns is-mobile is-vcentered">
+       <!-- title -->
+       <div class="column">
+        <p class="is-size-4 has-text-weight-bold">Transactions</p>
+       </div>
+       <!-- button new trasaction -->
+       <div class="column has-text-right">
+        <button class="button is-primary" id="add-new-transaction-btn">+ New Transaction</button>
+       </div>
+      </div>
+      <!-- BALANCE TITLE AND BUTTON END -->
+
+      <!-- ///////////////////////////// -->
+      <!-- TRANSACTIONS EMPTY BOX -->
+      <div class="section is-hidden">
+       <div class="container">
+        <div class="container has-text-centered px-6 py-5 mx-6">
+         <div class="image is-4by3 ">
+          <img src="BulmaWallet.svg" alt="BulmaWallet">
+         </div>
+         <h1 class="is-size-4 has-text-weight-medium p-5">Sin Resultados</h1>
+         <p class="pb-5">Cambia los filtros o agrega operaciones</p>
+        </div>
+       </div>
+      </div>
+      <!-- TRANSACTIONS EMPTY BOX END -->
+      <!-- ///////////////////////////// -->
+
+      <!-- ///////////////////////////// -->
+      <!-- TRANSACTIONS WTIH CONTENT BOX START -->
+
+      <!-- ///////////////////////////// -->
+      <!-- TITLES ROW -->
+
+      <!-- description, category, date, price, actions -->
+      <div class="columns pl-5 pr-5 is-mobile">
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification has-text-weight-medium p-0">
+         Description
+        </div>
+       </div>
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification has-text-weight-medium p-0">
+         Category
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification has-text-weight-medium p-0">
+         Date
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification has-text-weight-medium p-0">
+         Price
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification has-text-weight-medium p-0">
+         Actions
+        </div>
+       </div>
+      </div>
+      <!-- /// description, category, date, price, actions -->
+
+      <!-- TITLES ROW -->
+      <!-- ///////////////////////////// -->
+      <div id="transaction-content-box">
+
+
+
+      </div>
+      <!-- TRANSACTIONS WTIH CONTENT BOX END -->
+      <!-- ///////////////////////////// -->
+     </div>
+    </div>
+    <!-- ///////////////////////////// -->
+    <!-- ТRANSACTIONS BOX END -->
+    <!-- ///////////////////////////// -->
+   </div>
+   <!-- ///// BALANCE, FILTER AND TRANSACTIONS COLUMNS END -->
+  </div>
+ </div>
+ <!-- ///////////////////////////// -->
+ <!-- //////////////////////////////////////// -->
+ <!-- BALANCE MAIN PAGE END -->
+ <!-- //////////////////////////////////////// -->
+
+ <!-- ---------------------------------------- -->
+ <!-- ---------------------------------------- -->
+
+ <!-- //////////////////////////////////////// -->
+ <!-- CATEGORIES MAIN START -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///////////////////////////// -->
+ <div class="section is-hidden" id="main-section-categories">
+  <div class="container hero is-fullheight">
+   <div class="columns">
+    <!-- ///////////////////////////// -->
+    <!-- CATEGORIES MAIN COLUMN START -->
+    <!-- ///////////////////////////// -->
+    <div class="column box is-8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop is-multiline">
+     <div class="notification  p-1 pb-4 has-background-white">
+      <!-- CATEGORIES MAIN TITLE START-->
+      <div class="is-size-2 has-text-weight-bold pb-6">Categories</div>
+      <!-- /// CATEGORIES MAIN TITLE END -->
+
+      <!-- NEW CATEGORY INPUT BAR START -->
+      <label for="name-categories" class="label">Name</label>
+      <div class="field is-grouped">
+       <div class="control is-expanded mb-5">
+        <input type="text" class="input">
+       </div>
+       <!-- /// NEW CATEGORY INPUT BAR END -->
+
+       <!-- NEW CATEGORY BUTTON BAR START -->
+       <div class="control">
+        <button class="button is-success has-text-white ">Add New</button>
+       </div>
+      </div>
+      <!-- /// NEW CATEGORY BUTTON BAR END -->
+
+      <!-- CATEGORIES LIST START -->
+      <div id="categories-list">
+       <div class="columns is-vcentered is-mobile">
+        <div class="column pr-3 is-vcentered is-mobile">
+         <span class="tag has-text-primary-dark has-background-primary-light pl-2 pr-2 p-1 is-size-7">
+          Estudios
+         </span>
+        </div>
+        <div class="column is-narrow is-vcentered is-mobile is-size-7 has-text-right pr-4 mr-0 has-text-link">
+         <a href="" class="edit-link pr-5">Edit</a>
+         <a href="" class="delete-link">Delete</a>
+        </div>
+       </div>
+      </div>
+      <!-- /// CATEGORIES LIST END -->
+
+     </div>
+    </div>
+    <!-- ///////////////////////////// -->
+    <!-- CATEGORIES MAIN COLUMN END -->
+    <!-- ///////////////////////////// -->
+   </div>
+  </div>
+ </div>
+ <!-- ///////////////////////////// -->
+ <!-- //////////////////////////////////////// -->
+ <!-- CATEGORIAS MAIN END -->
+ <!-- //////////////////////////////////////// -->
+
+ <!-- ---------------------------------------- -->
+ <!-- ---------------------------------------- -->
+
+ <!-- //////////////////////////////////////// -->
+ <!-- REPORTES MAIN START -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///////////////////////////// -->
+ <div class="section is-hidden" id="main-section-reports">
+  <div class="container hero is-fullheight">
+   <div class="columns">
+    <div
+     class="column box is-8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop is-multiline pb-6 mt-6">
+     <div class="notification has-background-white p-1">
+      <!-- REPORTES MAIN TITLE START-->
+      <div class="is-size-2 has-text-weight-bold pb-6">Reports</div>
+      <!-- /// REPORTES MAIN TITLE END -->
+
+      <!-- ///////////////////////////// -->
+      <!-- EMPTY BOX START -->
+      <!-- ///////////////////////////// -->
+      <div class="section">
+       <div class="container has-text-centered py-6 my-6">
+        <div class="container">
+         <div class="image 4by4">
+          <img src="Empty Transactions.svg" alt="BulmaWallet">
+         </div>
+        </div>
+        <h1 class="is-size-4 has-text-weight-medium p-5">Not enough Transactions</h1>
+        <p class="pb-5">Try making more transactions</p>
+       </div>
+      </div>
+      <!-- ///////////////////////////// -->
+      <!-- EMPTY BOX END -->
+      <!-- ///////////////////////////// -->
+
+      <!-- ///////////////////////////// -->
+      <!-- RESUMEN START -->
+      <!-- ///////////////////////////// -->
+      <div class="is-hidden">
+       <div class="is-size-4 pl-5 p-5 has-text-weight-medium">Resumen</div>
+       <div class="columns pl-5 pr-5 is-mobile">
+        <!-- TITLES AND TYPES START -->
+        <div class="column has-text-weight-medium">
+         <div class="notification has-background-white p-0">Category with more income</div>
+         <div class="notification has-background-white p-0">Expensive category</div>
+         <div class="notification has-background-white p-0">Best balanced category</div>
+         <div class="notification has-background-white p-0">Month with more income</div>
+         <div class="notification has-background-white p-0">Month with more expenses</div>
+        </div>
+        <!-- /// TITLES AND TYPES END -->
+
+        <!-- CATEGORY TYPE AND DATES -->
+        <div class="column has-text-centered is-3">
+         <div class="notification p-0 has-background-white"><span
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+         </div>
+         <div class="notification p-0 has-background-white"><span
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+         </div>
+         <div class="notification p-0 has-background-white"><span
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+         </div>
+         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
+         </div>
+         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
+         </div>
+        </div>
+        <!-- /// CATEGORY TYPE AND DATES -->
+
+        <!-- NUMBERS -->
+        <div class="column is-2 has-text-right">
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span class="">+7000</span>
+         </div>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span class="mb">+7000</span>
+         </div>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         </div>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         </div>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         </div>
+         <!-- /// NUMBERS -->
+        </div>
+       </div>
+       <!-- ///////////////////////////// -->
+       <!-- /// RESUMEN END -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- TOTAL BY CATEGORY -->
+       <!-- ///////////////////////////// -->
+
+       <!-- MAIN TITLE -->
+       <div class="is-size-4 pl-5 p-5 has-text-weight-medium mt-5 pt-6">Total per category</div>
+       <!-- /// MAIN TITLE -->
+
+       <!-- ///////////////////////////// -->
+       <!-- TITLES ROW -->
+
+       <!-- category, income, bills, balance -->
+       <div class="columns pl-5 pr-5 is-mobile">
+        <div class="column is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Category
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Income
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Bills
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Balance
+         </div>
+        </div>
+       </div>
+       <!-- /// category, income, bills, balance -->
+
+       <!-- TITLES ROW -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- VALUES ROW -->
+
+       <!-- category, income, bills, balance -->
+       <div class="columns pl-5 pr-5 is-mobile">
+        <div class="column is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-weight-medium">Example</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-success">7000</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-danger">7000</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span>7000</span>
+         </div>
+        </div>
+       </div>
+       <!-- /// category, income, bills, balance -->
+
+       <!-- VALUES ROW -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- /// TOTAL BY CATEGORY END -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- MONTHLY NUMBERS START -->
+       <!-- ///////////////////////////// -->
+
+       <!-- MAIN TITLE -->
+       <div class="is-size-4 pl-5 p-5 mt-6 has-text-weight-medium">Total per month</div>
+       <!-- /// MAIN TITLE -->
+
+       <!-- ///////////////////////////// -->
+       <!-- TITLES ROW -->
+       <!-- month, income, bills, balance -->
+       <div class="columns pl-5 pr-5 is-mobile">
+        <div class="column is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Month
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Income
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Bills
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          Balance
+         </div>
+        </div>
+       </div>
+       <!-- /// month, income, bills, balance -->
+
+       <!-- TITLES ROW -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- VALUES ROW -->
+
+       <!-- category, income, bills, balance -->
+       <div class="columns pl-5 pr-5 is-mobile pb-4">
+        <div class="column is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-weight-medium">Example</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-success">7000</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-danger">7000</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span>7000</span>
+         </div>
+        </div>
+       </div>
+       <!-- /// month, income, bills, balance -->
+
+       <!-- VALUES ROW -->
+       <!-- ///////////////////////////// -->
+
+       <!-- ///////////////////////////// -->
+       <!-- /// MONTHLY NUMBERS END -->
+       <!-- ///////////////////////////// -->
+      </div>
+      <!-- ///////////////////////////// -->
+      <!-- RESUMEN END -->
+      <!-- ///////////////////////////// -->
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <!-- ///////////////////////////// -->
+ <!-- //////////////////////////////////////// -->
+ <!-- REPORTES MAIN END -->
+ <!-- //////////////////////////////////////// -->
+
+ <!-- ---------------------------------------- -->
+ <!-- ---------------------------------------- -->
+
+ <!-- //////////////////////////////////////// -->
+ <!-- ADD NEW / EDIT TRANSACTION START -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ///////////////////////////// -->
+ <div class="section is-hidden" id="add-edit-new-main">
+  <div class="container hero is-fullheight mt-6">
+   <div class="columns">
+    <!-- ///////////////////////////// -->
+    <!-- ADD NEW / EDIT TRANSACTION MAIN COLUMN START -->
+    <!-- ///////////////////////////// -->
+    <div class="column box is-8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop is-multiline">
+     <div class="notification  p-1 pb-4 has-background-white">
+      <!-- ADD NEW / EDIT MAIN TITLE START-->
+      <div class="is-size-2 has-text-weight-bold pb-6" id="change-title-edit-transaction">New Transaction</div>
+      <!-- /// ADD NEW / EDIT MAIN TITLE END -->
+
+      <form action="" id="form-new-transaction">
+       <!-- DESCRIPTION INPUT BAR START -->
+       <label for="name-categories" class="label">Description</label>
+       <div class="field is-grouped">
+        <div class="control is-expanded">
+         <input type="text" class="input" id="description-transaction-input">
+        </div>
+       </div>
+       <!-- /// DESCRIPTION INPUT BAR END -->
+
+       <!-- PRICE INPUT BAR START -->
+       <label for="name-categories" class="label">Price</label>
+       <div class="field is-grouped">
+        <div class="control is-expanded has-text-black">
+         <input type="number" class="input" placeholder="0" id="price-transaction-input" value="0">
+        </div>
+       </div>
+       <!-- /// PRICE INPUT BAR END -->
+
+       <!-- TYPE INPUT BAR START -->
+       <label for="name-categories" class="label">Type</label>
+       <div class="field is-grouped">
+        <div class="control is-expanded">
+         <div class="select is-fullwidth">
+          <select name="" id="type-transaction-input">
+           <option value="expense">Expense</option>
+           <option value="income">Income</option>
+          </select>
+         </div>
+        </div>
+       </div>
+       <!-- /// TYPE INPUT BAR END -->
+
+       <!-- CATEGORY INPUT BAR START -->
+       <label for="name-categories" class="label">Category</label>
+       <div class="field is-grouped">
+        <div class="control is-expanded">
+         <div class="select is-fullwidth">
+          <select name="" id="category-transaction-input">
+           <!-- Filled from JS -->
+          </select>
+         </div>
+        </div>
+       </div>
+       <!-- /// CATEGORY INPUT BAR END -->
+
+       <!-- DATE INPUT BAR START -->
+       <label for="name-categories" class="label">Date</label>
+       <div class="field is-grouped">
+        <div class="control is-expanded">
+         <input type="date" class="input" id="date-transaction-input">
+        </div>
+       </div>
+       <!-- /// DATE INPUT BAR END -->
+
+       <!-- NEW / EDIT TRANSACTION BUTTON START -->
+       <div class="control has-text-right mt-6">
+        <button class="button is-light mr-2" id="new-edit-btn-cancel">Cancel</button>
+        <button type="submit" class="button is-success has-text-white" id="add-transaction-btn">Add New</button>
+        <button class="button is-success has-text-white is-hidden" type="submit" id="edit-transaction-btn">Edit
+         Transaction</button>
+       </div>
+       <!-- /// NEW / EDIT TRANSACTION BUTTON END -->
+      </form>
+     </div>
+    </div>
+    <!-- ///////////////////////////// -->
+    <!-- CATEGORIES MAIN COLUMN END -->
+    <!-- ///////////////////////////// -->
+   </div>
+  </div>
+ </div>
+ <!-- ///////////////////////////// -->
+ <!-- //////////////////////////////////////// -->
+ <!-- ADD NEW / EDIT TRANSACTION END -->
+ <!-- //////////////////////////////////////// -->
+
+ <!-- ---------------------------------------- -->
+
+
+
+
+
+ <script>
+  /* //////////////////////////////////////// */
+  /* MAIN EMPTY OBJECT */
+  /* //////////////////////////////////////// */
+  let mainDataBulmaBudget
+  if (localStorage.getItem('mainDataBulmaBudget') === null) {
+   let mainDataBulmaBudget2 = {
+    categories: [
+     'educacion',
+     'transporte',
+     'salud',
+     'comida',
+    ],
+    transactions: []
+   }
+   localStorage.setItem('mainDataBulmaBudget', JSON.stringify(mainDataBulmaBudget2))
+   mainDataBulmaBudget = mainDataBulmaBudget2
+  } else {
+   mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+  }
+
+  /* //////////////////////////////////////// */
+  /* GLOBAL VARIABLES */
+  /* //////////////////////////////////////// */
+  const show_main_sections = document.querySelectorAll('[data-navbar-target]')
+
+  /* //////////////////////////////////////// */
+  /* MAIN SECTIONS SHOW / HIDE FUNCTIONS */
+  /* //////////////////////////////////////// */
+  show_main_sections.forEach(button => {
+   button.addEventListener('click', () => {
+    const section = document.querySelector(button.dataset.navbarTarget)
+    hideSections()
+    section.classList.remove('is-hidden')
+   })
+  })
+
+  function hideSections() {
+   show_main_sections.forEach(mainSection => {
+    const main_Section = document.querySelector(mainSection.dataset.navbarTarget)
+    main_Section.classList.add('is-hidden')
+   })
+  }
+
+  /* //////////////////////////////////////// */
+  /* NEW / EDIT TRANSACTION SHOW / HIDE */
+  /* //////////////////////////////////////// */
+  document.querySelector('#new-edit-btn-cancel').onclick = () => {
+   document.querySelector('#add-edit-new-main').classList.add('is-hidden')
+   document.querySelector('#main-section-balance').classList.remove('is-hidden')
+  }
+  document.querySelector('#add-transaction-btn').onclick = () => {
+   document.querySelector('#add-edit-new-main').classList.add('is-hidden')
+   document.querySelector('#main-section-balance').classList.remove('is-hidden')
+  }
+
+  document.querySelector('#add-new-transaction-btn').onclick = () => {
+   document.querySelector('#change-title-edit-transaction').textContent = 'New Transaction'
+   document.querySelector('#add-transaction-btn').textContent = 'Add New'
+   document.querySelector('#add-edit-new-main').classList.remove('is-hidden')
+   document.querySelector('#main-section-balance').classList.add('is-hidden')
+   document.querySelector('#form-new-transaction').reset()
+   fillDateToday()
+
+  }
+
+  /* //////////////////////////////////////// */
+  /* FILL CATEGORIES LIST FROM LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  const fillCategoryList = () => {
+   let { categories } = mainDataBulmaBudget
+
+   let fillCategoryList = categories.reduce((acc, category) => {
+    return acc +=
+     `
+      <div class="columns is-vcentered is-mobile">
+       <div class="column pr-3 is-vcentered is-mobile">
+        <span class="tag has-text-primary-dark has-background-primary-light pl-2 pr-2 p-1 is-size-7">
+         ${category}
+        </span>
+       </div>
+       <div class="column is-narrow is-vcentered is-mobile is-size-7 has-text-right pr-4 mr-0 has-text-link">
+        <a href="" class="edit-link pr-5">Edit</a>
+        <a href="" class="delete-link">Delete</a>
+       </div>
+      </div>
+      `
+   }, '')
+
+   document.querySelector('#categories-list').innerHTML = fillCategoryList
+  }
+
+  fillCategoryList()
+  /* //////////////////////////////////////// */
+  /* FILL SELECT FROM CATEGORY LIST */
+  /* //////////////////////////////////////// */
+  function fillCategorySelect() {
+   let { categories } = mainDataBulmaBudget
+
+   let categoryForSelect = categories.reduce((acc, category) => {
+    return acc +=
+     `
+    <option value="${category}">${category.charAt(0).toUpperCase() + category.slice(1)}</option>
+    `
+   }, '')
+   document.querySelector('#category-transaction-input').innerHTML = categoryForSelect
+  }
+
+  fillCategorySelect()
+  /* //////////////////////////////////////// */
+  /* FILL DATE SELECT INPUT WITH TODAY'S DATE */
+  /* //////////////////////////////////////// */
+  function fillDateToday() {
+   var date = new Date();
+
+   var day = date.getDate();
+   var month = date.getMonth() + 1;
+   var year = date.getFullYear();
+
+   if (month < 10) month = "0" + month;
+   if (day < 10) day = "0" + day;
+
+   var today = year + "-" + month + "-" + day;
+   document.querySelector('#date-transaction-input').value = today;
+  }
+
+  fillDateToday()
+  /* //////////////////////////////////////// */
+  /* FILL SELECT FILTERS FROM LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function fillSelectFiltersFromLocalStorage() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { categories } = mainDataBulmaBudget
+
+   let categoriesToFill = categories.reduce((acc, category) => {
+    return acc +=
+     `
+    <option value="${category}">${category.charAt(0).toUpperCase() + category.slice(1)}</option>
+    
+    `
+   }, '')
+
+   document.querySelector('#select-filter-by-category').innerHTML = categoriesToFill
+
+  }
+  fillSelectFiltersFromLocalStorage()
+  /* //////////////////////////////////////// */
+  /* FILL TRANSACTION BOX FROM LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function fillTransactionBoxFromLocalStorage() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   let transactionsToFillBox = transactions.reduce((acc, transaction, index) => {
+    return acc +=
+     `
+    <div class="columns pl-5 pr-5 is-mobile">
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification p-0 has-text-weight-medium">
+         ${transaction.description}
+        </div>
+       </div>
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification p-0 tag has-text-primary-dark has-background-primary-light pl-2 pr-2 p-1 is-size-7">
+         ${transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification p-0">
+         ${transaction.date.toLocaleString()}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification p-0 price-color-depend-number">
+         ${priceColorDependOnType(transaction.type, transaction.price)}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right has-text-link is-vcentered">
+        <div class="notification p-0 has-text-right">
+         <a href="" class="is-size-7 edit-link pr-5" id="edit-transaction-index-${index}">Edit</a>
+         <a href="" class="is-size-7 delete-link" id="delete-transaction-index-${index}">Delete</a>
+        </div>
+       </div>
+      </div>
+    `
+   }, '')
+
+   document.querySelector('#transaction-content-box').innerHTML = transactionsToFillBox
+  }
+
+  fillTransactionBoxFromLocalStorage()
+  /* //////////////////////////////////////// */
+  /* PRICE COLUMN COLOR */
+  /* //////////////////////////////////////// */
+  function priceColorDependOnType(type, price) {
+   if (type === 'expense') {
+    return `<span class="has-text-danger">-$${price}</span>`
+   } else {
+    return `<span class="has-text-success">+$${price}</span>`
+   }
+  }
+  /* //////////////////////////////////////// */
+  /* FIND TRANSACTION INDEX */
+  /* //////////////////////////////////////// */
+  function findTransactionIndex() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   return transactions.length - 1
+
+  }
+  findTransactionIndex()
+  /* //////////////////////////////////////// */
+  /* ADD NEW / SAVE LOCAL STORAGE TRANSACTION */
+  /* //////////////////////////////////////// */
+  document.querySelector('#form-new-transaction').onsubmit = (e) => {
+   e.preventDefault()
+
+   if (document.querySelector('#change-title-edit-transaction').textContent === 'New Transaction') {
+
+    const new_transaction = {
+     id: findTransactionIndex(),
+     description: document.querySelector('#description-transaction-input').value,
+     price: parseInt(document.querySelector('#price-transaction-input').value),
+     type: document.querySelector('#type-transaction-input').value,
+     category: document.querySelector('#category-transaction-input').value,
+     date: document.querySelector('#date-transaction-input').value
+    }
+
+    saveToLocalStorageNewTransaction(new_transaction)
+    document.querySelector('#form-new-transaction').reset()
+    fillTransactionBoxFromLocalStorage()
+    balanceMainTotal()
+   }
+  }
+  /* //////////////////////////////////////// */
+  /* SAVE TRANSACTION IN LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function saveToLocalStorageNewTransaction(new_transaction) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   transactions.push(new_transaction)
+
+   saveMainDataToLocal(mainDataBulmaBudget)
+  }
+
+  function saveMainDataToLocal(mainDataBulmaBudget) {
+   localStorage.setItem('mainDataBulmaBudget', JSON.stringify(mainDataBulmaBudget))
+  }
+  /* //////////////////////////////////////// */
+  /* DELETE TRANSACTION FROM HTML AND LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  document.querySelector('#transaction-content-box').addEventListener('click', (e) => {
+   e.preventDefault()
+   let item = e.target
+
+   if (item.classList[1] === 'delete-link') {
+    let item_index = parseInt((item.getAttribute('id')).substring(25))
+    item.parentElement.parentElement.parentElement.remove()
+    deleteTransactionFromLocalStorage(item_index)
+    fillTransactionBoxFromLocalStorage()
+    balanceMainTotal()
+   }
+  })
+  /* //////////////////////////////////////// */
+  /* DELETE TRANSACTION FROM LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function deleteTransactionFromLocalStorage(index) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   transactions.splice(index, 1)
+
+   saveMainDataToLocal(mainDataBulmaBudget)
+  }
+  /* //////////////////////////////////////// */
+  /* OPEN EDIT TRANSACTION FROM MAIN */
+  /* //////////////////////////////////////// */
+  document.querySelector('#transaction-content-box').addEventListener('click', (e) => {
+   e.preventDefault()
+   let item = e.target
+
+   if (item.classList[1] === 'edit-link') {
+    let item_index = parseInt((item.getAttribute('id')).substring(23))
+    editTransactionShowButtonTitles()
+    fillEditTransactionFromLocalStorage(item_index)
+
+    document.querySelector('#form-new-transaction').onsubmit = (e) => {
+     e.preventDefault()
+     if (document.querySelector('#change-title-edit-transaction').textContent === 'Edit Transaction') {
+      saveEditedTransactionToLocalStorage(item_index)
+      fillTransactionBoxFromLocalStorage()
+     }
+    }
+   }
+  })
+  /* //////////////////////////////////////// */
+  /* EDIT TRANSACTION SHOW / HIDE BUTTON TITLES */
+  /* //////////////////////////////////////// */
+  function editTransactionShowButtonTitles() {
+   document.querySelector('#change-title-edit-transaction').textContent = 'Edit Transaction'
+   document.querySelector('#add-transaction-btn').textContent = 'Edit Transaction'
+   document.querySelector('#add-edit-new-main').classList.remove('is-hidden')
+   document.querySelector('#main-section-balance').classList.add('is-hidden')
+  }
+  /* //////////////////////////////////////// */
+  /* FILL EDIT TRANSACTION FROM LOCALSTORAGE */
+  /* //////////////////////////////////////// */
+  function fillEditTransactionFromLocalStorage(transactionIndex) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   document.querySelector('#description-transaction-input').value = transactions[transactionIndex].description
+   document.querySelector('#price-transaction-input').value = transactions[transactionIndex].price
+   document.querySelector('#type-transaction-input').value = transactions[transactionIndex].type
+   document.querySelector('#category-transaction-input').value = transactions[transactionIndex].category
+   document.querySelector('#date-transaction-input').value = transactions[transactionIndex].date
+  }
+  /* //////////////////////////////////////// */
+  /* SAVE EDITED TRANSACTION TO LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function saveEditedTransactionToLocalStorage(transactionIndex) {
+
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   transactions[transactionIndex].description = document.querySelector('#description-transaction-input').value
+   transactions[transactionIndex].price = parseInt(document.querySelector('#price-transaction-input').value)
+   transactions[transactionIndex].type = document.querySelector('#type-transaction-input').value
+   transactions[transactionIndex].category = document.querySelector('#category-transaction-input').value,
+    transactions[transactionIndex].date = document.querySelector('#date-transaction-input').value
+
+   saveMainDataToLocal(mainDataBulmaBudget)
+  }
+  /* //////////////////////////////////////// */
+  /* GET TRANSACTION FROM LOCAL STORAGE */
+  /* //////////////////////////////////////// */
+  function getTransactionsFromLocalStorage() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   return transactions
+  }
+  /* //////////////////////////////////////// */
+  /* BALANCE MAIN PROFITS SUM TOTAL */
+  /* //////////////////////////////////////// */
+  function balanceMainProfits() {
+   let transactions = getTransactionsFromLocalStorage()
+
+   let Profits = transactions.reduce((acc, transaction) => {
+    transaction.type === 'income' && (acc += transaction.price)
+    return acc
+   }, 0)
+
+   document.querySelector('#main-balance-profits').innerHTML = parseInt(Profits)
+
+   return Profits
+  }
+
+  /* //////////////////////////////////////// */
+  /* BALANCE MAIN BILLS SUM TOTAL */
+  /* //////////////////////////////////////// */
+  function balanceMainBills() {
+   let transactions = getTransactionsFromLocalStorage()
+
+   let bills = transactions.reduce((acc, transaction) => {
+    (transaction.type === 'expense') && (acc += transaction.price)
+
+    return acc
+   }, 0)
+
+   document.querySelector('#main-balance-bills').innerHTML = parseInt(bills)
+
+   return bills
+  }
+  /* //////////////////////////////////////// */
+  /* BALANCE MAIN TOTAL */
+  /* //////////////////////////////////////// */
+  function balanceMainTotal() {
+   let total = balanceMainProfits() - balanceMainBills()
+
+   document.querySelector('#main-balance-total').innerHTML = total
+   return total
+  }
+
+  balanceMainTotal()
+  /* //////////////////////////////////////// */
+  /* FILTERS HIDE / SHOW  */
+  /* //////////////////////////////////////// */
+  document.querySelector('#hide-show-filter-link').onclick = (e) => {
+   e.preventDefault()
+   document.querySelector('#balance-filters-box').classList.toggle('is-hidden')
+  }
+  /* //////////////////////////////////////// */
+  /* FILL FILTERED TRANSACTION BOX  */
+  /* //////////////////////////////////////// */
+  function fillFilteredTransactionBox(transactionsToFillBox) {
+
+   let transactionsToFillHTML = transactionsToFillBox.reduce((acc, transaction, index) => {
+    return acc +=
+     `
+    <div class="columns pl-5 pr-5 is-mobile">
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification p-0 has-text-weight-medium">
+         ${transaction.description}
+        </div>
+       </div>
+       <div class="column is-3 has-text-left is-vcentered">
+        <div class="notification p-0 tag has-text-primary-dark has-background-primary-light pl-2 pr-2 p-1 is-size-7">
+         ${transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification p-0">
+         ${transaction.date.toLocaleString()}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right is-vcentered">
+        <div class="notification p-0 price-color-depend-number">
+         ${priceColorDependOnType(transaction.type, transaction.price)}
+        </div>
+       </div>
+       <div class="column is-2 has-text-right has-text-link is-vcentered">
+        <div class="notification p-0 has-text-right">
+         <a href="" class="is-size-7 edit-link pr-5" id="edit-transaction-index-${index}">Edit</a>
+         <a href="" class="is-size-7 delete-link" id="delete-transaction-index-${index}">Delete</a>
+        </div>
+       </div>
+      </div>
+    `
+   }, '')
+
+   document.querySelector('#transaction-content-box').innerHTML = transactionsToFillHTML
+  }
+  /* //////////////////////////////////////// */
+  /* FILTER BY TYPE */
+  /* //////////////////////////////////////// */
+  function transactionsFilteredByType() {
+   let transactions = getTransactionsFromLocalStorage()
+
+   const transactionsFilteredByType = transactions.filter(transaction => {
+    if (document.querySelector('#filter-by-type').value === 'all') {
+     return transaction
+    }
+    return document.querySelector('#filter-by-type').value === transaction.type
+   })
+
+   return transactionsFilteredByType
+  }
+  /* //////////////////////////////////////// */
+  /* FILTER BY CATEGORY */
+  /* //////////////////////////////////////// */
+  function transactionsFilteredByCategory(transactionsFilteredByType) {
+   const transactionsFilteredByCategory = transactionsFilteredByType.filter(transaction => {
+    if (document.querySelector('#select-filter-by-category').value === 'all') {
+     return transaction
+    } else {
+     return document.querySelector('#select-filter-by-category').value === transaction.category
+    }
+   })
+   return transactionsFilteredByCategory
+  }
+  /* //////////////////////////////////////// */
+  /* FILTER BY DATE */
+  /* //////////////////////////////////////// */
+  function transactionsFilteredByDate(transactionsFilteredByCategory) {
+   const transactionsFilteredByDate = transactionsFilteredByCategory.filter(transaction =>{
+    return new Date(transaction.date) > document.querySelector('#filter-by-date')
+   })
+  }
+  /* //////////////////////////////////////// */
+  /* APPLY FILTERS */
+  /* //////////////////////////////////////// */
+  function applyFilters() {
+   let filteredTransactions = transactionsFilteredByCategory(transactionsFilteredByType())
+
+   console.table(filteredTransactions);
+   return filteredTransactions
+  }
+  /* //////////////////////////////////////// */
+  /* APPLY FILTER FUNCTIONS TO INPUTS */
+  /* //////////////////////////////////////// */
+  document.querySelector('#filter-by-type').onchange = () => {
+   fillFilteredTransactionBox(applyFilters())
+  }
+
+  document.querySelector('#select-filter-by-category').onchange = () => {
+   fillFilteredTransactionBox(applyFilters())
+  }
+
+
+
+
+
+ </script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
