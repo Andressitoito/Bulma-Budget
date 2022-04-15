@@ -79,7 +79,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
  <!-- BALANCE MAIN PAGE START -->
  <!-- //////////////////////////////////////// -->
  <!-- ///////////////////////////// -->
- <div class="section" id="main-section-balance">
+ <div class="section is-hidden" id="main-section-balance">
   <div class="container hero is-fullheight">
    <!-- BALANCE, FILTER AND TRANSACTIONS COLUMNS -->
    <div class="columns is-multiline">
@@ -140,7 +140,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
         <p class="is-size-4 has-text-weight-bold">Filters</p>
        </div>
        <div class="column has-text-right has-text-info">
-        <div class="is-size-6 p-0"><a href="#" class=" delete-link" id="hide-show-filter-link">Hide Filters</a></div>
+        <div class="is-size-6 p-0"><a href="#" class=" delete-link" id="hide-show-filter-link">Hide Filters</a>
+        </div>
        </div>
       </div>
       <!-- ///// FILTER TITLE AND HIDE OPTION END -->
@@ -187,12 +188,13 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
         <label for="filterby" class="label">Filter by</label>
         <div class="control">
          <div class="select is-fullwidth">
-          <select name="" id="">
-           <option value="">Mas reciente</option>
-           <option value=""></option>
-           <option value=""></option>
-           <option value=""></option>
-           <option value=""></option>
+          <select name="" id="filter-by">
+           <option value="recent">Recent</option>
+           <option value="less recent">Less Recent</option>
+           <option value="higher amount">Higher Amount</option>
+           <option value="lower amount">Lower Amount</option>
+           <option value="a-z">A-Z</option>
+           <option value="z-a">Z-A</option>
           </select>
          </div>
         </div>
@@ -281,9 +283,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
       <!-- TITLES ROW -->
       <!-- ///////////////////////////// -->
       <div id="transaction-content-box">
-
-
-
       </div>
       <!-- TRANSACTIONS WTIH CONTENT BOX END -->
       <!-- ///////////////////////////// -->
@@ -371,7 +370,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
  <!-- REPORTES MAIN START -->
  <!-- //////////////////////////////////////// -->
  <!-- ///////////////////////////// -->
- <div class="section is-hidden" id="main-section-reports">
+ <div class="section " id="main-section-reports">
   <div class="container hero is-fullheight">
    <div class="columns">
     <div
@@ -384,7 +383,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
       <!-- ///////////////////////////// -->
       <!-- EMPTY BOX START -->
       <!-- ///////////////////////////// -->
-      <div class="section">
+      <div class="section is-hidden">
        <div class="container has-text-centered py-6 my-6">
         <div class="container">
          <div class="image 4by4">
@@ -402,7 +401,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
       <!-- ///////////////////////////// -->
       <!-- RESUMEN START -->
       <!-- ///////////////////////////// -->
-      <div class="is-hidden">
+      <div class="">
        <div class="is-size-4 pl-5 p-5 has-text-weight-medium">Resumen</div>
        <div class="columns pl-5 pr-5 is-mobile">
         <!-- TITLES AND TYPES START -->
@@ -418,13 +417,15 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
         <!-- CATEGORY TYPE AND DATES -->
         <div class="column has-text-centered is-3">
          <div class="notification p-0 has-background-white"><span
-           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag"
+           id="span-category-with-more-income">Category</span>
          </div>
          <div class="notification p-0 has-background-white"><span
-           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag"
+           id="expensive-category">Category</span>
          </div>
          <div class="notification p-0 has-background-white"><span
-           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag">Category</span>
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag" id="best-balanced-category">Category</span>
          </div>
          <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
          </div>
@@ -435,11 +436,13 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
         <!-- NUMBERS -->
         <div class="column is-2 has-text-right">
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span class="">+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium has-text-success">+$<span class=""
+           id="span-category-with-more-income-price">+7000</span>
          </div>
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span class="mb">+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium has-text-danger">-$<span
+           class="has-text-danger " id="span-expensive-category">+7000</span>
          </div>
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span id="span-best-balanced-category">+7000</span>
          </div>
          <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
          </div>
@@ -734,7 +737,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
   } else {
    mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
   }
-
   /* //////////////////////////////////////// */
   /* GLOBAL VARIABLES */
   /* //////////////////////////////////////// */
@@ -805,7 +807,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    document.querySelector('#categories-list').innerHTML = fillCategoryList
   }
-
   fillCategoryList()
   /* //////////////////////////////////////// */
   /* FILL SELECT FROM CATEGORY LIST */
@@ -819,6 +820,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
     <option value="${category}">${category.charAt(0).toUpperCase() + category.slice(1)}</option>
     `
    }, '')
+
    document.querySelector('#category-transaction-input').innerHTML = categoryForSelect
   }
 
@@ -838,6 +840,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    var today = year + "-" + month + "-" + day;
    document.querySelector('#date-transaction-input').value = today;
+   document.querySelector('#filter-by-date').value = today;
   }
 
   fillDateToday()
@@ -849,8 +852,13 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    let { categories } = mainDataBulmaBudget
 
-   let categoriesToFill = categories.reduce((acc, category) => {
-    return acc +=
+   let categoriesToFill = `
+    <option value="all">All</option>
+    
+    `
+
+   categories.reduce((acc, category) => {
+    return categoriesToFill +=
      `
     <option value="${category}">${category.charAt(0).toUpperCase() + category.slice(1)}</option>
     
@@ -858,7 +866,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
    }, '')
 
    document.querySelector('#select-filter-by-category').innerHTML = categoriesToFill
-
   }
   fillSelectFiltersFromLocalStorage()
   /* //////////////////////////////////////// */
@@ -869,7 +876,7 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    let { transactions } = mainDataBulmaBudget
 
-   let transactionsToFillBox = transactions.reduce((acc, transaction, index) => {
+   let transactionsToFillBox = transactions.reverse().reduce((acc, transaction, index) => {
     return acc +=
      `
     <div class="columns pl-5 pr-5 is-mobile">
@@ -1169,7 +1176,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
     }
     return document.querySelector('#filter-by-type').value === transaction.type
    })
-
    return transactionsFilteredByType
   }
   /* //////////////////////////////////////// */
@@ -1189,38 +1195,216 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
   /* FILTER BY DATE */
   /* //////////////////////////////////////// */
   function transactionsFilteredByDate(transactionsFilteredByCategory) {
-   const transactionsFilteredByDate = transactionsFilteredByCategory.filter(transaction =>{
-    return new Date(transaction.date) > document.querySelector('#filter-by-date')
+   const transactionsFilteredByDate = transactionsFilteredByCategory.filter(transaction => {
+    return new Date(transaction.date) >= new Date(document.querySelector('#filter-by-date').value)
    })
+   return transactionsFilteredByDate
+  }
+  /* //////////////////////////////////////// */
+  /* FILTER BY: RECENT, LESS RECENT, HIGHER AMOUNT, LOWER AMOUNT, A-Z, Z-A */
+  /* //////////////////////////////////////// */
+  function filterByDateAmountAZ(transactionsFilteredByDate) {
+   if (document.querySelector('#filter-by').value === 'recent') {
+    return [...orderTransactionsByDate(transactionsFilteredByDate)].reverse()
+   } else if (document.querySelector('#filter-by').value === 'less recent') {
+    return orderTransactionsByDate(transactionsFilteredByDate)
+   } else if (document.querySelector('#filter-by').value === 'higher amount') {
+    return orderTransactionByAmount(transactionsFilteredByDate)
+   } else if (document.querySelector('#filter-by').value === 'lower amount') {
+    return [...orderTransactionByAmount(transactionsFilteredByDate)].reverse()
+   } else if (document.querySelector('#filter-by').value === 'a-z') {
+    return orderTransactionsAlphabetically(transactionsFilteredByDate)
+   } else if (document.querySelector('#filter-by').value === 'z-a') {
+    return [...orderTransactionsAlphabetically(transactionsFilteredByDate)].reverse()
+   }
+  }
+  /* //////////////////////////////////////// */
+  /* ORDER TRANSACTIONS BY DATE */
+  /* //////////////////////////////////////// */
+  function orderTransactionsByDate(filteredTransactions) {
+   let arrangedTransactions = filteredTransactions.sort((a, b) => { return new Date(b.fecha) - new Date(a.fecha) })
+   return arrangedTransactions
+  }
+  /* //////////////////////////////////////// */
+  /* ORDER TRANSACTIONS BY AMOUNT */
+  /* //////////////////////////////////////// */
+  function orderTransactionByAmount(filteredTransactions) {
+   let arrangedTransactions = filteredTransactions.sort(function (a, b) { return b.price - a.price })
+   return arrangedTransactions
+  }
+  /* //////////////////////////////////////// */
+  /* ORDER TRANSACTIONS ALPHABETICALLY */
+  /* //////////////////////////////////////// */
+  function orderTransactionsAlphabetically(filteredTransactions) {
+   let arrangedTransactions = filteredTransactions.sort((a, b) => { return b.description - a.description })
+   return arrangedTransactions
   }
   /* //////////////////////////////////////// */
   /* APPLY FILTERS */
   /* //////////////////////////////////////// */
   function applyFilters() {
-   let filteredTransactions = transactionsFilteredByCategory(transactionsFilteredByType())
-
-   console.table(filteredTransactions);
+   let filteredTransactions = transactionsFilteredByDate(transactionsFilteredByCategory(transactionsFilteredByType()))
    return filteredTransactions
   }
   /* //////////////////////////////////////// */
   /* APPLY FILTER FUNCTIONS TO INPUTS */
   /* //////////////////////////////////////// */
+  /* FILTER BY TYPE INPUT ON CHANGE */
   document.querySelector('#filter-by-type').onchange = () => {
    fillFilteredTransactionBox(applyFilters())
   }
-
+  /* FILTER BY CATEGORY INPUT ON CHANGE */
   document.querySelector('#select-filter-by-category').onchange = () => {
    fillFilteredTransactionBox(applyFilters())
   }
+  /* FILTER BY DATE INPUT ON CHANGE */
+  document.querySelector('#filter-by-date').onchange = () => {
+   fillFilteredTransactionBox(applyFilters())
+  }
+  /* FILTER BY RECENT - AMOUNT - AZ INPUT ON CHANGE */
+  document.querySelector('#filter-by').onchange = () => {
+   fillFilteredTransactionBox(filterByDateAmountAZ(applyFilters()))
+  }
+  /* //////////////////////////////////////// */
+  /* CATEGORY WITH MORE INCOME */
+  /* //////////////////////////////////////// */
+  function incomeExpenseByCategory(category, type) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   let incomeByCategory = transactions.reduce((acc, transaction) => {
+    if (transaction.category === category && transaction.type === type) {
+     return acc += transaction.price
+    }
+    return acc
+   }, 0)
+   return incomeByCategory
+  }
+
+  function categoryWithMoreIncome() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { categories } = mainDataBulmaBudget
+
+   let incomeByCategory = categories.map(category => {
+    return {
+     category: category,
+     incomeByCategory: incomeExpenseByCategory(category, 'income')
+    }
+   })
+
+   let maxCategory = ''
+   let price = 0
+
+   incomeByCategory.map(category => {
+    if (category.incomeByCategory > price) {
+     maxCategory = category.category
+     price = category.incomeByCategory
+    }
+   })
+
+   document.querySelector('#span-category-with-more-income').innerHTML = maxCategory.charAt(0).toLocaleUpperCase() + maxCategory.slice(1)
+   document.querySelector('#span-category-with-more-income-price').innerHTML = price
+  }
+
+  categoryWithMoreIncome()
+  /* //////////////////////////////////////// */
+  /* CATEGORY WITH MORE EXPENSE */
+  /* //////////////////////////////////////// */
+  function categoryWithMoreExpense() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { categories } = mainDataBulmaBudget
+
+   let incomeByCategory = categories.map(category => {
+    return {
+     category: category,
+     incomeByCategory: incomeExpenseByCategory(category, 'expense')
+    }
+   })
+
+   let maxCategory = ''
+   let price = 0
+
+   incomeByCategory.map(category => {
+
+    if (category.incomeByCategory > price) {
+     maxCategory = category.category
+     price = category.incomeByCategory
+    }
+   })
+
+   document.querySelector('#expensive-category').innerHTML = maxCategory.charAt(0).toLocaleUpperCase() + maxCategory.slice(1)
+   document.querySelector('#span-expensive-category').innerHTML = price
+  }
+  categoryWithMoreExpense()
+  /* //////////////////////////////////////// */
+  /* BEST BALANCED CATEGORY */
+  /* //////////////////////////////////////// */
+  function bestBalancedCategoryByCategory(category) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   let incomeByCategory = transactions.reduce((acc, transaction) => {
+    if (transaction.category === category && transaction.type === 'income') {
+     return acc += transaction.price
+    } else if (transaction.category === category && transaction.type === 'expense') {
+     return acc -= transaction.price
+    }
+    return acc
+   }, 0)
+
+   return incomeByCategory
+  }
+
+  console.log(`🚀 `, bestBalancedCategoryByCategory('transporte'))
+
+  function bestBalancedCategory() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { categories } = mainDataBulmaBudget
+   let bestBalancedCategory = categories.map(category => {
+    return {
+     category: category,
+     incomeByCategory: bestBalancedCategoryByCategory(category)
+    }
+   })
+
+   let balanceMainTotal = ''
+   let incomeByCategory = 0 
+
+   bestBalancedCategory.map(category =>{
+    if(category.incomeByCategory > incomeByCategory){
+     balanceMainTotal = category.category
+     incomeByCategory = category.incomeByCategory
+    }
+   })
+
+   document.querySelector('#best-balanced-category').innerHTML = balanceMainTotal.charAt(0).toUpperCase() + balanceMainTotal.slice(1)
+
+   document.querySelector('#span-best-balanced-category').innerHTML = incomeByCategory
+  }
+
+  bestBalancedCategory()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
  </script>
-
-
-
 
 
 
