@@ -425,7 +425,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
            id="expensive-category">Category</span>
          </div>
          <div class="notification p-0 has-background-white"><span
-           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag" id="best-balanced-category">Category</span>
+           class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag"
+           id="best-balanced-category">Category</span>
          </div>
          <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
          </div>
@@ -442,7 +443,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
          <div class="notification p-0 has-background-white has-text-weight-medium has-text-danger">-$<span
            class="has-text-danger " id="span-expensive-category">+7000</span>
          </div>
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span id="span-best-balanced-category">+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium"><span
+           id="span-best-balanced-category">+7000</span>
          </div>
          <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
          </div>
@@ -1373,10 +1375,10 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
    })
 
    let balanceMainTotal = ''
-   let incomeByCategory = 0 
+   let incomeByCategory = 0
 
-   bestBalancedCategory.map(category =>{
-    if(category.incomeByCategory > incomeByCategory){
+   bestBalancedCategory.map(category => {
+    if (category.incomeByCategory > incomeByCategory) {
      balanceMainTotal = category.category
      incomeByCategory = category.incomeByCategory
     }
@@ -1388,9 +1390,23 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
   }
 
   bestBalancedCategory()
+  /* //////////////////////////////////////// */
+  /* BEST BALANCED CATEGORY */
+  /* //////////////////////////////////////// */
+  function monthWithMoreIncome(month) {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { transactions } = mainDataBulmaBudget
+
+   let monthWithMoreIncome = transactions.reduce((acc, transaction) => {
+    if(transaction.date.getMonth()+1 === month){
+     return 
+    }
+
+   }, 0)
 
 
-
+  }
 
 
 
