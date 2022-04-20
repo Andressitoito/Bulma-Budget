@@ -1013,6 +1013,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    if (item.classList[1] === 'edit-link') {
     let item_index = parseInt((item.getAttribute('id')).substring(23))
+    console.log(item)
+    console.log(item_index)
     editTransactionShowButtonTitles()
     fillEditTransactionFromLocalStorage(item_index)
 
@@ -1042,6 +1044,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
    let { transactions } = mainDataBulmaBudget
 
+   transactions.reverse()
+
    document.querySelector('#description-transaction-input').value = transactions[transactionIndex].description
    document.querySelector('#price-transaction-input').value = transactions[transactionIndex].price
    document.querySelector('#type-transaction-input').value = transactions[transactionIndex].type
@@ -1056,6 +1060,8 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
    let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
 
    let { transactions } = mainDataBulmaBudget
+
+   transactions.reverse()
 
    transactions[transactionIndex].description = document.querySelector('#description-transaction-input').value
    transactions[transactionIndex].price = parseInt(document.querySelector('#price-transaction-input').value)
@@ -1361,7 +1367,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
    return incomeByCategory
   }
 
-  console.log(`🚀 `, bestBalancedCategoryByCategory('transporte'))
 
   function bestBalancedCategory() {
    let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
@@ -1391,22 +1396,56 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
 
   bestBalancedCategory()
   /* //////////////////////////////////////// */
-  /* BEST BALANCED CATEGORY */
+  /* MONTH WITH MORE INCOME */
   /* //////////////////////////////////////// */
   function monthWithMoreIncome(month) {
    let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
 
+   let orderTransactionsByDate = new Map()
+
    let { transactions } = mainDataBulmaBudget
 
-   let monthWithMoreIncome = transactions.reduce((acc, transaction) => {
-    if(transaction.date.getMonth()+1 === month){
-     return 
-    }
+   transactions.map((transaction) => {
 
-   }, 0)
+    if (transaction.type === 'income' && orderTransactionsByDate.get(transaction.date.substring(0, 7)) === undefined) {
+
+     return orderTransactionsByDate.set(transaction.date.substring(0, 7), transaction.price)
+
+    } else if (transaction.type === 'income') {
+
+     let priceFromTransaction = orderTransactionsByDate.get(transaction.date.substring(0, 7))
+
+     orderTransactionsByDate.set(transaction.date.substring(0, 7), (transaction.price + priceFromTransaction))
+    }
+   })
+
+   let monthWithMoreIncome = ''
+   let income = 0
+
+   for (let transaction of orderTransactionsByDate) {
+    if (transaction[1] > income) {
+     monthWithMoreIncome = transaction[0]
+     income = transaction[1]
+    }
+   }
+
+   return monthWithMoreIncome
+  }
+  monthWithMoreIncome()
+
+  /* //////////////////////////////////////// */
+  /* MONTH WITH MORE EXPENSES */
+  /* //////////////////////////////////////// */
+  function monthWithMoreExpenses (){
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   
 
 
   }
+
+  monthWithMoreExpenses()
+
 
 
 
