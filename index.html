@@ -428,9 +428,11 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
            class="is-size-7 has-background-primary-light has-text-primary-dark p-3 tag"
            id="best-balanced-category">Category</span>
          </div>
-         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
+         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3"
+           id="month-with-more-income">23/01/2034</span>
          </div>
-         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3">23/01/2034</span>
+         <div class="notification p-0 has-background-white"><span class="is-size-6 p-3"
+           id="month-with-more-expenses">23/01/2034</span>
          </div>
         </div>
         <!-- /// CATEGORY TYPE AND DATES -->
@@ -446,9 +448,11 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
          <div class="notification p-0 has-background-white has-text-weight-medium"><span
            id="span-best-balanced-category">+7000</span>
          </div>
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium has-text-success ">+$<span
+           id="month-with-more-income-price">+7000</span>
          </div>
-         <div class="notification p-0 has-background-white has-text-weight-medium"><span>+7000</span>
+         <div class="notification p-0 has-background-white has-text-weight-medium has-text-danger">-$<span
+           id="month-with-more-expenses-price">+7000</span>
          </div>
          <!-- /// NUMBERS -->
         </div>
@@ -500,25 +504,27 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
        <!-- VALUES ROW -->
 
        <!-- category, income, bills, balance -->
-       <div class="columns pl-5 pr-5 is-mobile">
-        <div class="column is-vcentered">
-         <div class="notification has-background-white has-text-weight-medium p-0">
-          <span class="has-text-weight-medium">Example</span>
+       <div id="total-per-category-html">
+        <div class="columns pl-5 pr-5 is-mobile">
+         <div class="column is-vcentered">
+          <div class="notification has-background-white has-text-weight-medium p-0">
+           <span class="has-text-weight-medium">Example</span>
+          </div>
          </div>
-        </div>
-        <div class="column has-text-right is-vcentered">
-         <div class="notification has-background-white has-text-weight-medium p-0">
-          <span class="has-text-success">7000</span>
+         <div class="column has-text-right is-vcentered">
+          <div class="notification has-background-white has-text-weight-medium p-0">
+           <span class="has-text-success">7000</span>
+          </div>
          </div>
-        </div>
-        <div class="column has-text-right is-vcentered">
-         <div class="notification has-background-white has-text-weight-medium p-0">
-          <span class="has-text-danger">7000</span>
+         <div class="column has-text-right is-vcentered">
+          <div class="notification has-background-white has-text-weight-medium p-0">
+           <span class="has-text-danger">7000</span>
+          </div>
          </div>
-        </div>
-        <div class="column has-text-right is-vcentered">
-         <div class="notification has-background-white has-text-weight-medium p-0">
-          <span>7000</span>
+         <div class="column has-text-right is-vcentered">
+          <div class="notification has-background-white has-text-weight-medium p-0">
+           <span>7000</span>
+          </div>
          </div>
         </div>
        </div>
@@ -1367,7 +1373,6 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
    return incomeByCategory
   }
 
-
   function bestBalancedCategory() {
    let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
 
@@ -1429,6 +1434,9 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
     }
    }
 
+   document.querySelector('#month-with-more-income').innerHTML = monthWithMoreIncome
+   document.querySelector('#month-with-more-income-price').innerHTML = income
+
    return monthWithMoreIncome
   }
   monthWithMoreIncome()
@@ -1436,16 +1444,95 @@ CATEGORIAS: Como cambiar el color de un texto con el hover
   /* //////////////////////////////////////// */
   /* MONTH WITH MORE EXPENSES */
   /* //////////////////////////////////////// */
-  function monthWithMoreExpenses (){
+  function monthWithMoreExpenses() {
    let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
 
-   
+   let { transactions } = mainDataBulmaBudget
 
+   let orderTransactionsByDate = new Map()
 
+   transactions.map(transaction => {
+
+    if (transaction.type === 'expense' && orderTransactionsByDate.get(transaction.date.substring(0, 7)) === undefined) {
+
+     return orderTransactionsByDate.set(transaction.date.substring(0, 7), transaction.price)
+
+    } else if (transaction.type === 'expense') {
+
+     let priceFromTransaction = orderTransactionsByDate.get(transaction.date.substring(0, 7))
+
+     return orderTransactionsByDate.set(transaction.date.substring(0, 7), (priceFromTransaction + orderTransactionsByDate.get(transaction.date.substring(0, 7))))
+
+    }
+   })
+
+   let monthWithMoreExpenses = ''
+   let expense = 0
+
+   for (let transaction of orderTransactionsByDate) {
+    if (transaction[1] > expense) {
+     monthWithMoreExpenses = transaction[0]
+     expense = transaction[1]
+    }
+   }
+
+   document.querySelector('#month-with-more-expenses').innerHTML = monthWithMoreExpenses
+   document.querySelector('#month-with-more-expenses-price').innerHTML = expense
+
+   return monthWithMoreExpenses
   }
 
   monthWithMoreExpenses()
 
+  /* //////////////////////////////////////// */
+  /* TOTAL PER CATEGORY */
+  /* //////////////////////////////////////// */
+  function fillTotalPercategory() {
+   let mainDataBulmaBudget = JSON.parse(localStorage.getItem('mainDataBulmaBudget'))
+
+   let { categories } = mainDataBulmaBudget
+
+   let incomeExpensePerCategory = categories.map(category => {
+    return {
+     category: category,
+     income: incomeExpenseByCategory(category, 'income'),
+     expense: incomeExpenseByCategory(category, 'expense'),
+     balance: bestBalancedCategoryByCategory(category)
+    }
+   })
+   console.table(incomeExpensePerCategory)
+
+   let incomeExpensePerCategoryHTML = incomeExpensePerCategory.reduce((acc, category) => {
+    return acc += `
+       <div class="columns pl-5 pr-5 is-mobile">
+        <div class="column is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-weight-medium">${category.category.charAt(0).toLocaleUpperCase() + category.category.slice(1)}</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-success">+$${category.income}</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span class="has-text-danger">-$${category.expense}</span>
+         </div>
+        </div>
+        <div class="column has-text-right is-vcentered">
+         <div class="notification has-background-white has-text-weight-medium p-0">
+          <span>$${category.balance}</span>
+         </div>
+        </div>
+       </div>
+  `
+   },'')
+
+   document.querySelector('#total-per-category-html').innerHTML = incomeExpensePerCategoryHTML
+
+  }
+  fillTotalPercategory()
 
 
 
